@@ -12,10 +12,13 @@
 ┗ 🌼 defaults (opcional)  
    ┗ 🎯 Valores por defecto aplicables a todos los steps
 ┗ 🔑 permissions (opcional)
-  ┗ 🚥 contents (requerido)
+  ┗ 🚥 contents (requerido) Define los permisos que el workflow tiene en el repositorio.  
+┗ 🌼 concurrency (opcional)  
+   ┗ ⏱️ Permite controlar la ejecución simultánea de workflows.  
 ┗ 🌼 jobs (requerido)  
    ┗ 💼 nombre del Job, Contiene todas las tareas que se ejecutarán
-      ┗ 🌐 runs-on (requerido)  
+      ┗ 🌐 runs-on (requerido)
+      ┗ 🎯 defaults (opcional)
       ┗ 🚀 strategy (opcional)
         ┗ 🔢 matrix (requerido)
       ┗ 🔑 permissions (opcional)
@@ -32,7 +35,6 @@
          ┗ ⏳ timeout-minutes: Tiempo límite  
          ┗ 🏁 continue-on-error: Continuar tras error  
          ┗ 📁 working-directory: Cambiar directorio  
-
 ┗ 🌼 container (opcional)  
    ┗ 🐳 Define un contenedor Docker personalizado  
 ┗ 🌼 services (opcional)  
@@ -46,19 +48,6 @@
 ┗ 🌼 if (opcional)  
    ┗ ⚙️ Condición para ejecutar el job completo.  
 ```
----  
-
-### Otros elementos globales del YAML:  
-
-┗ 🌼 permissions (opcional)  
-   ┗ 🔒 Define los permisos que el workflow tiene en el repositorio.  
-
-┗ 🌼 concurrency (opcional)  
-   ┗ ⏱️ Permite controlar la ejecución simultánea de workflows.  
-
-┗ 🌼 defaults (opcional)  
-   ┗ 🎯 Configura valores por defecto para los pasos de trabajo.  
-
 ---
 
 ## Partes del workflow
