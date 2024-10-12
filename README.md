@@ -5,26 +5,25 @@
 ⭐ GitHub Actions Workflow  
 ┗ 🌼 name (opcional)  
    ┗ 📄 Nombre del workflow para identificarlo  
-
 ┗ 🌼 on (requerido)  
    ┗ 🔄 Define los eventos que desencadenan el workflow  
-
 ┗ 🌼 env (opcional)  
    ┗ 🌍 Variables de entorno globales  
-
 ┗ 🌼 defaults (opcional)  
-   ┗ 🎯 Valores por defecto aplicables a todos los steps  
-
+   ┗ 🎯 Valores por defecto aplicables a todos los steps
+┗ 🔑 permissions (opcional)
+  ┗ 🚥 contents (requerido)
 ┗ 🌼 jobs (requerido)  
-   ┗ 💼 Contiene todos los trabajos que se ejecutarán  
-
-   ┗ 💼 Dentro de jobs, partes adicionales:  
+   ┗ 💼 nombre del Job, Contiene todas las tareas que se ejecutarán
       ┗ 🌐 runs-on (requerido)  
+      ┗ 🚀 strategy (opcional)
+        ┗ 🔢 matrix (requerido)
+      ┗ 🔑 permissions (opcional)
+        ┗ 🚥 contents (requerido)
       ┗ 📄 needs (opcional)  
-      ┗ 🚀 strategy (opcional)  
       ┗ 📜 steps (requerido)  
          ┗ 📄 name: Nombre del paso  
-         ┗ 🔑 id: Identificador único  
+         ┗ 🪪 id: Identificador único  
          ┗ 🚀 uses: Acción externa  
          ┗ 💻 run: Comandos a ejecutar  
          ┗ 🔧 with: Parámetros para uses  
@@ -36,19 +35,14 @@
 
 ┗ 🌼 container (opcional)  
    ┗ 🐳 Define un contenedor Docker personalizado  
-
 ┗ 🌼 services (opcional)  
    ┗ 🛠️ Servicios adicionales  
-
 ┗ 🌼 outputs (opcional)  
    ┗ 📊 Salidas del trabajo  
-
 ┗ 🌼 timeout-minutes (opcional)  
    ┗ ⏳ Límite de tiempo global para todo el job.  
-
 ┗ 🌼 continue-on-error (opcional)  
    ┗ 🏁 Permite que el workflow continúe aunque el job falle.  
-
 ┗ 🌼 if (opcional)  
    ┗ ⚙️ Condición para ejecutar el job completo.  
 ```
