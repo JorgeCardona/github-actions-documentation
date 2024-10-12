@@ -1,5 +1,71 @@
 # github-actions-documentation
 
+## Estructura y Elementos de Workflows en GitHub Actions
+```yaml
+⭐ GitHub Actions Workflow  
+┗ 🌼 name (opcional)  
+   ┗ 📄 Nombre del workflow para identificarlo  
+
+┗ 🌼 on (requerido)  
+   ┗ 🔄 Define los eventos que desencadenan el workflow  
+
+┗ 🌼 env (opcional)  
+   ┗ 🌍 Variables de entorno globales  
+
+┗ 🌼 defaults (opcional)  
+   ┗ 🎯 Valores por defecto aplicables a todos los steps  
+
+┗ 🌼 jobs (requerido)  
+   ┗ 💼 Contiene todos los trabajos que se ejecutarán  
+
+   ┗ 💼 Dentro de jobs, partes adicionales:  
+      ┗ 🌐 runs-on (requerido)  
+      ┗ 📄 needs (opcional)  
+      ┗ 🚀 strategy (opcional)  
+      ┗ 📜 steps (requerido)  
+         ┗ 📄 name: Nombre del paso  
+         ┗ 🔑 id: Identificador único  
+         ┗ 🚀 uses: Acción externa  
+         ┗ 💻 run: Comandos a ejecutar  
+         ┗ 🔧 with: Parámetros para uses  
+         ┗ 🌍 env: Variables de entorno  
+         ┗ ⚡ if: Condición  
+         ┗ ⏳ timeout-minutes: Tiempo límite  
+         ┗ 🏁 continue-on-error: Continuar tras error  
+         ┗ 📁 working-directory: Cambiar directorio  
+
+┗ 🌼 container (opcional)  
+   ┗ 🐳 Define un contenedor Docker personalizado  
+
+┗ 🌼 services (opcional)  
+   ┗ 🛠️ Servicios adicionales  
+
+┗ 🌼 outputs (opcional)  
+   ┗ 📊 Salidas del trabajo  
+
+┗ 🌼 timeout-minutes (opcional)  
+   ┗ ⏳ Límite de tiempo global para todo el job.  
+
+┗ 🌼 continue-on-error (opcional)  
+   ┗ 🏁 Permite que el workflow continúe aunque el job falle.  
+
+┗ 🌼 if (opcional)  
+   ┗ ⚙️ Condición para ejecutar el job completo.  
+```
+---  
+
+### Otros elementos globales del YAML:  
+
+┗ 🌼 permissions (opcional)  
+   ┗ 🔒 Define los permisos que el workflow tiene en el repositorio.  
+
+┗ 🌼 concurrency (opcional)  
+   ┗ ⏱️ Permite controlar la ejecución simultánea de workflows.  
+
+┗ 🌼 defaults (opcional)  
+   ┗ 🎯 Configura valores por defecto para los pasos de trabajo.  
+
+---
 
 ## Partes del workflow
 | **Nombre**        | **Posición**           | **Descripción**                                                                                                                                                  | **Cuándo Usar**                                                                 | **Ejemplo**                                                                                      |
