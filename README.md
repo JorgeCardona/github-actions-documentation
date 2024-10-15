@@ -74,9 +74,116 @@
   **Ejemplo**:
   ```yaml
   run: echo "La hora actual es ${{ env.RESULT_VAR }}"  # Accede a la variable de entorno RESULT_VAR
+  
+  run: echo "El token es: ${{ secrets.MY_SECRET_TOKEN }}"  # Acceso al secreto MY_SECRET_TOKEN
+
+  steps:
+   - name: Run a script
+     id: my_step
+     run: echo "output_value=42" >> $GITHUB_ENV  # Define una variable de entorno
+   
+   - name: Use output from previous step
+     run: echo "El valor de output_value es: ${{ steps.my_step.outputs.output_value }}"
+
+  ```
+  Aquí, `${{ env.RESULT_VAR }}` es evaluado por GitHub Actions para obtener el valor de la variable de entorno `RESULT_VAR`, que fue definida en un paso o job anterior.
+
+### Explicación de Variables de Contexto en GitHub Actions
+
+GitHub Actions permite el uso de varias variables de contexto para facilitar la reutilización y el acceso a datos en los flujos de trabajo. Aquí se detallan algunas de las más importantes:
+
+#### 1. **Secrets**
+
+- **Definición**: Los *secrets* son variables de entorno que almacenan información sensible, como contraseñas, tokens de acceso y claves API, son guardados directamente en la configuración de tu repositorio en GitHub. Se utilizan para evitar la exposición de información confidencial en los registros de ejecución.
+  
+- **Acceso**: Se accede a un *secret* utilizando la sintaxis `${{ secrets.SECRET_NAME }}`. Esto permite acceder a un valor de secreto definido en la configuración del repositorio.
+
+- **Ejemplo**:
+  ```yaml
+  run: echo "El token es: ${{ secrets.MY_SECRET_TOKEN }}"  # Acceso al secreto MY_SECRET_TOKEN
   ```
 
-  Aquí, `${{ env.RESULT_VAR }}` es evaluado por GitHub Actions para obtener el valor de la variable de entorno `RESULT_VAR`, que fue definida en un paso o job anterior.
+#### 2. **Steps**
+
+- **Definición**: Los *steps* son las acciones individuales que se ejecutan dentro de un job en un flujo de trabajo. Cada *step* puede ejecutar un comando o usar una acción de GitHub.
+
+- **Acceso**: Puedes acceder a los resultados de los pasos anteriores utilizando la sintaxis `${{ steps.STEP_ID.outputs.OUTPUT_NAME }}`. Esto permite la reutilización de datos producidos por un *step* en otros pasos.
+
+- **Ejemplo**:
+  ```yaml
+  steps:
+    - name: Run a script
+      id: my_step
+      run: echo "output_value=42" >> $GITHUB_ENV  # Define una variable de entorno
+
+    - name: Use output from previous step
+      run: echo "El valor de output_value es: ${{ steps.my_step.outputs.output_value }}"
+  ```
+
+#### 3. **Env (Variables de Entorno)**
+
+- **Definición**: Las variables de entorno son valores que se pueden definir y utilizar a lo largo del flujo de trabajo.
+
+- **Acceso**: Se accede a una variable de entorno utilizando la sintaxis `${{ env.VARIABLE_NAME }}`.
+
+- **Ejemplo**:
+  ```yaml
+  env:
+    RESULT_VAR: "Valor de ejemplo"
+
+  run: echo "La hora actual es: ${{ env.RESULT_VAR }}"  # Accede a la variable de entorno RESULT_VAR
+  ```
+
+### Ejemplo Completo
+
+Aquí tienes un ejemplo de flujo de trabajo que utiliza **secrets**, **steps**, y **env**:
+
+```yaml
+name: Example Workflow
+
+on: [push]
+
+jobs:
+  example_job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set Environment Variable
+        id: set_var
+        run: |
+          echo "RESULT_VAR=Valor de ejemplo" >> $GITHUB_ENV  # Exporta la variable como variable de entorno
+
+      - name: Use Secret
+        run: |
+          echo "El token secreto es: ${{ secrets.MY_SECRET_TOKEN }}"  # Acceso al secreto
+
+      - name: Use Environment Variable
+        run: |
+          echo "La hora actual es: ${{ env.RESULT_VAR }}"  # Accede a la variable de entorno RESULT_VAR
+
+      - name: Output from Previous Step
+        id: output_step
+        run: |
+          echo "output_value=42" >> $GITHUB_ENV  # Define un valor en el entorno
+
+      - name: Access Output from Previous Step
+        run: |
+          echo "El valor de output_value es: ${{ steps.output_step.outputs.output_value }}"  # Acceso al output del paso anterior
+```
+
+### Resumen
+
+En este flujo de trabajo, hemos utilizado:
+
+- **Secrets** para acceder a un token sensible guardado directamente en la configuración de tu repositorio en GitHub, sin exponerlo en los registros de ejecución.
+- **Steps** para definir y reutilizar valores generados en pasos anteriores.
+- **Env** para acceder a variables de entorno definidas en el flujo de trabajo.
+
+Esto permite una configuración más flexible y segura en GitHub Actions, facilitando la automatización de tareas mientras se protege la información sensible.
+
 
 ### Detalles adicionales:
 - **Llaves sencillas `{}`**: Las variables declaradas con llaves sencillas en shell solo están disponibles dentro del ámbito del script que se está ejecutando en ese paso. No se comparten automáticamente entre diferentes pasos de GitHub Actions a menos que las exportes explícitamente a un archivo o variable de entorno.
