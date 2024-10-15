@@ -107,7 +107,8 @@ GitHub Actions permite el uso de varias variables de contexto para facilitar la 
 
 - **Definición**: Los *steps* son las acciones individuales que se ejecutan dentro de un job en un flujo de trabajo. Cada *step* puede ejecutar un comando o usar una acción de GitHub.
 
-- **Acceso**: Puedes acceder a los resultados de los pasos anteriores utilizando la sintaxis `${{ steps.STEP_ID.outputs.OUTPUT_NAME }}`. Esto permite la reutilización de datos producidos por un *step* en otros pasos.
+- **Acceso**: Puedes acceder a los resultados de los pasos anteriores utilizando la sintaxis steps.<step_id>.outputs.<variable_name>
+ `${{ steps.STEP_ID.outputs.VARIABLE_NAME }}`. Esto permite la reutilización de datos producidos por un *step* en otros pasos.
 
 - **Ejemplo**:
   ```yaml
