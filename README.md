@@ -50,6 +50,40 @@
 ```
 ---
 
+
+## Tipos de llaves y usos en el workflow
+
+| Tipo de Llaves            | Uso                                               | Descripción                                                                                                                                                                          | Ejemplo                                                                                                       |
+|---------------------------|--------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------|
+| **Llaves Sencillas `{}`**  | Usadas en scripts de shell dentro de los comandos `run`. | Se utilizan dentro de scripts de shell (bash) para manejar variables locales del script y realizar sustituciones. Permiten acceder a valores calculados y exportar variables dentro del mismo entorno de ejecución del shell. Estas variables son locales al script y no se comparten entre pasos, a menos que se exporten explícitamente. | ```bash output=$(python src/script.py)  echo "Valor: ${output}"  # Acceder a una variable de shell ```          |
+| **Llaves Dobles `{{}}`**   | Usadas en expresiones de GitHub Actions dentro del archivo YAML. | Se usan en GitHub Actions para evaluar expresiones y acceder a variables de contexto como `env`, `steps`, `secrets`, entre otros. Estas variables pueden ser compartidas entre pasos y jobs dentro del flujo de trabajo. Las expresiones con `{{}}` son procesadas por GitHub Actions antes de ejecutar los comandos, permitiendo el uso dinámico de datos en el YAML. | ```yaml run: echo "El tiempo actual es ${{ env.current_time }}"  # Acceder a una variable de entorno global ``` |
+
+### Resumen:
+- **Llaves sencillas `{}`**: Se usan dentro de scripts de shell (por ejemplo, en los pasos de `run` en GitHub Actions) para manejar variables locales del propio script. Estas variables pueden ser definidas y accedidas directamente dentro del entorno de ejecución del shell. Además, permiten exportar variables o valores calculados para usarlos en otros comandos dentro del mismo script. Por ejemplo, al ejecutar un script, puedes capturar la salida de un comando y almacenarla en una variable local usando llaves sencillas. Estas variables solo están disponibles dentro del script que se ejecuta en ese paso específico.
+  
+  **Ejemplo**:
+  ```bash
+   output=$(python script.py)  # Captura la salida del script Python en una variable, capturando el último print del script
+   echo "Resultado: ${output}"  # Imprime el valor de la variable 'output' en la consola para verificar el resultado
+   echo "RESULT_VAR=${output}" >> $GITHUB_ENV  # Exporta la variable RESULT_VAR como variable de entorno
+  ```
+
+- **Llaves dobles `{{}}`**: Se usan dentro del archivo YAML de GitHub Actions para referirse a variables del contexto del flujo de trabajo. Estas expresiones permiten acceder a información específica del entorno de ejecución, como variables de entorno (`env`), salidas de pasos anteriores (`steps`), secretos (`secrets`), e incluso realizar operaciones o cálculos dentro del flujo. Las variables dentro de las llaves dobles son evaluadas por GitHub Actions y su valor es accesible a lo largo del flujo de trabajo. Esto es útil para compartir información entre pasos o jobs y configurar parámetros dinámicos en tiempo de ejecución.
+
+  **Ejemplo**:
+  ```yaml
+  run: echo "La hora actual es ${{ env.RESULT_VAR }}"  # Accede a la variable de entorno RESULT_VAR
+  ```
+
+  Aquí, `${{ env.RESULT_VAR }}` es evaluado por GitHub Actions para obtener el valor de la variable de entorno `RESULT_VAR`, que fue definida en un paso o job anterior.
+
+### Detalles adicionales:
+- **Llaves sencillas `{}`**: Las variables declaradas con llaves sencillas en shell solo están disponibles dentro del ámbito del script que se está ejecutando en ese paso. No se comparten automáticamente entre diferentes pasos de GitHub Actions a menos que las exportes explícitamente a un archivo o variable de entorno.
+  
+- **Llaves dobles `{{}}`**: Las variables referenciadas con llaves dobles en el archivo YAML están disponibles para todos los pasos de un mismo job y pueden ser compartidas entre jobs si se configuran como artefactos o salidas. GitHub Actions procesa estas expresiones antes de ejecutar los comandos de shell, lo que permite que variables dinámicas sean fácilmente accesibles en todo el flujo de trabajo.
+
+
+
 ## Partes del workflow
 | **Nombre**        | **Posición**           | **Descripción**                                                                                                                                                  | **Cuándo Usar**                                                                 | **Ejemplo**                                                                                      |
 |-------------------|------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------|
