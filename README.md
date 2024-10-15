@@ -63,7 +63,8 @@
   
   **Ejemplo**:
   ```bash
-   output=$(python script.py)  # Captura la salida del script Python en una variable, capturando el último print del script
+   output=$(python script.py)  # Captura la salida de las funciones del codigo que son los prints del script Python en una variable. Si no hay prints, la variable estará vacía.
+   output=$(python script.py | tail -n 1)  # Captura solo el último print de la salida del script
    echo "Resultado: ${output}"  # Imprime el valor de la variable 'output' en la consola para verificar el resultado
    echo "RESULT_VAR=${output}" >> $GITHUB_ENV  # Exporta la variable RESULT_VAR como variable de entorno
   ```
