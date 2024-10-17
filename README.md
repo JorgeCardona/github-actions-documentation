@@ -5,6 +5,10 @@
 ⭐ GitHub Actions Workflow  
 ┗ 🌼 name (opcional)  
    ┗ 📄 Nombre del workflow para identificarlo  
+┗ 🌼 description (opcional)  
+   ┗ 📒️ Descripción del workflow para entender su propósito.  
+┗ 🌼 author (opcional)  
+   ┗ 👨🏻‍💻 Autor del pipeline, puede ser nombre, email. etc  
 ┗ 🌼 on (requerido)  
    ┗ 🔄 Define los eventos que desencadenan el workflow  
 ┗ 🌼 env (opcional)  
