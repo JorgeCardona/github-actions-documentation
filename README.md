@@ -1,5 +1,8 @@
 # github-actions-documentation
 
+## Programación de Ejecución de Eventos
+![scheduled-events](https://raw.githubusercontent.com/JorgeCardona/github-actions-documentation/refs/heads/main/images/scheduled-events.png)
+
 ## Componentes del Workflow
 ![workflow-components](https://raw.githubusercontent.com/JorgeCardona/github-actions-documentation/refs/heads/main/images/github-actions-workflow-components.png)
 
