@@ -1,5 +1,8 @@
 # github-actions-documentation
 
+## Componentes del Workflow
+![workflow-components](https://raw.githubusercontent.com/JorgeCardona/github-actions-documentation/refs/heads/main/images/github-actions-workflow-components.png)
+
 ## Estructura y Elementos de Workflows en GitHub Actions
 ```yaml
 ⭐ GitHub Actions Workflow  
