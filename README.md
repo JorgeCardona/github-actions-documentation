@@ -35,6 +35,10 @@
    ┗ ⏱️ Permite controlar la ejecución simultánea de workflows.  
 ┗ 🌼 jobs (requerido)  
    ┗ 💼 nombre del Job, Contiene todas las tareas que se ejecutarán
+      ┗ ♻️ environment (opcional)
+         ┗ 🌍 Define el entorno donde se ejecuta el job, como producción, desarrollo o cualquier otro entorno que hayas configurado.
+         ┗ 🔑 url: Puedes establecer una URL que apunte a tu entorno.
+         ┗ 🔒 secret: Permite acceso a secretos específicos del entorno (como tokens de acceso o claves de API).
       ┗ 🌐 runs-on (requerido)
       ┗ 🎯 defaults (opcional)
       ┗ 🚀 strategy (opcional)
@@ -153,9 +157,33 @@ GitHub Actions permite el uso de varias variables de contexto para facilitar la 
   run: echo "La hora actual es: ${{ env.RESULT_VAR }}"  # Accede a la variable de entorno RESULT_VAR
   ```
 
+#### 4. **Environment (Entornos)**
+
+- **Definición**: Los entornos en GitHub Actions permiten ejecutar flujos de trabajo en diferentes contextos, como producción, staging, desarrollo, etc. También puedes asociar permisos y *secrets* específicos a cada entorno, proporcionando control sobre cómo se acceden y utilizan los datos confidenciales en cada uno.
+
+- **Acceso**: Se configura un entorno en el flujo de trabajo usando la clave `environment` y `vars`. Además, puedes definir secretos específicos para cada entorno, utilizando la sintaxis `${{ vars.SECRET_VALUE }}`.
+
+- **Ejemplo**:
+```yaml
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: production  # Nombre del entorno
+      url: https://example.com  # URL del entorno de producción
+      description: "Entorno de producción para desplegar la aplicación."  # Descripción del entorno
+
+    steps:
+      - name: Deploy code
+        run: echo "Desplegando en el entorno de ${{ job.environment.name }}"
+
+      - name: Access secret in environment
+        run: echo "El token es: ${{ vars.SECRET_VALUE }}"  # Acceso al secreto desde vars.SECRET_VALUE
+```
+
 ### Ejemplo Completo
 
-Aquí tienes un ejemplo de flujo de trabajo que utiliza **secrets**, **steps**, y **env**:
+Ejemplo de flujo de trabajo que utiliza **secrets**, **steps**, y **env**:
 
 ```yaml
 name: Example Workflow
@@ -165,6 +193,10 @@ on: [push]
 jobs:
   example_job:
     runs-on: ubuntu-latest
+    environment:
+      name: production  # Se define el entorno "production"
+      url: https://tu-url-del-entorno  # URL del entorno
+      description: "Descripción del entorno de producción"  # Descripción del entorno
 
     steps:
       - name: Checkout Repository
@@ -174,10 +206,6 @@ jobs:
         id: set_var
         run: |
           echo "RESULT_VAR=Valor de ejemplo" >> $GITHUB_ENV  # Exporta la variable como variable de entorno
-
-      - name: Use Secret
-        run: |
-          echo "El token secreto es: ${{ secrets.MY_SECRET_TOKEN }}"  # Acceso al secreto
 
       - name: Use Environment Variable
         run: |
@@ -190,7 +218,14 @@ jobs:
 
       - name: Access Output from Previous Step
         run: |
-          echo "El valor de output_value es: ${{ steps.output_step.outputs.output_value }}"  # Acceso al output del paso anterior
+          echo "El valor de output_value es: ${{ env.output_value }}"  # Acceso al output del paso anterior
+
+      - name: Access Environment Specific Variable
+        run: |
+          echo "El valor de la variable de entorno es: ${{ vars.SECRET_VALUE }}"  # Acceso correcto a la variable específica del entorno
+
+      - name: Deploy code
+        run: echo "Desplegando en el entorno de ${{ job.environment.name }}"
 ```
 
 ### Resumen
