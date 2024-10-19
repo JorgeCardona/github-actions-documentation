@@ -4,6 +4,11 @@
 ![scheduled-events](https://raw.githubusercontent.com/JorgeCardona/github-actions-documentation/refs/heads/main/images/scheduled-events.png)
 
 ## Como adicionar Secretos al Repositorio actual
+| Secret                | Name                 | Value |
+|-----------------------|----------------------|-------|
+| Runner Debug Logging   | ACTIONS_RUNNER_DEBUG | true  |
+| Steps Debug Logging    | ACTIONS_STEP_DEBUG   | true  |
+
 ![Repo Secrets](images/repo_secrets.png)
 
 ## Componentes del Workflow
