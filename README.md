@@ -3,6 +3,9 @@
 ## Programación de Ejecución de Eventos
 ![scheduled-events](https://raw.githubusercontent.com/JorgeCardona/github-actions-documentation/refs/heads/main/images/scheduled-events.png)
 
+## Como adicionar Secretos al Repositorio actual
+![Repo Secrets](images/repo_secrets.png)
+
 ## Componentes del Workflow
 ![workflow-components](https://raw.githubusercontent.com/JorgeCardona/github-actions-documentation/refs/heads/main/images/github-actions-workflow-components.png)
 
