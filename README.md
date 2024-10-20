@@ -9,7 +9,11 @@
 | Runner Debug Logging   | ACTIONS_RUNNER_DEBUG | true  |
 | Steps Debug Logging    | ACTIONS_STEP_DEBUG   | true  |
 
+# Secretos del Repositorio
 ![Repo Secrets](images/repo_secrets.png)
+
+# Secretos del Ambiente
+![Environment Secrets](images/environment_secrets.png)
 
 ## Componentes del Workflow
 ![workflow-components](https://raw.githubusercontent.com/JorgeCardona/github-actions-documentation/refs/heads/main/images/github-actions-workflow-components.png)
