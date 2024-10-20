@@ -118,6 +118,14 @@
 
 GitHub Actions permite el uso de varias variables de contexto para facilitar la reutilización y el acceso a datos en los flujos de trabajo. Aquí se detallan algunas de las más importantes:
 
+| Tipo                     | Pertenece a                          | Cómo se recuperan en el workflow                   |
+|--------------------------|--------------------------------------|---------------------------------------------------|
+| **Secrets (Actions)**    | Secrets del repositorio              | `${{ secrets.NOMBRE_DEL_SECRET }}`                |
+| **Secrets (Environments)** | Secrets del entorno                  | `${{ secrets.NOMBRE_DEL_SECRET }}`                |
+| **Variables de entorno** | Variables configuradas en el workflow o heredadas del sistema | `${{ env.NOMBRE_DE_LA_VARIABLE }}`                 |
+| **Variables (Actions)**  | Variables definidas a nivel del repositorio | `${{ env.NOMBRE_DE_LA_VARIABLE }}`                 |
+| **Variables (Environments)** | Variables específicas de un entorno (Environments) | `${{ vars.NOMBRE_DE_LA_VARIABLE }}`                |
+
 #### 1. **Secrets**
 
 - **Definición**: Los *secrets* son variables de entorno que almacenan información sensible, como contraseñas, tokens de acceso y claves API, son guardados directamente en la configuración de tu repositorio en GitHub. Se utilizan para evitar la exposición de información confidencial en los registros de ejecución.
@@ -165,7 +173,7 @@ GitHub Actions permite el uso de varias variables de contexto para facilitar la 
 
 - **Definición**: Los entornos en GitHub Actions permiten ejecutar flujos de trabajo en diferentes contextos, como producción, staging, desarrollo, etc. También puedes asociar permisos y *secrets* específicos a cada entorno, proporcionando control sobre cómo se acceden y utilizan los datos confidenciales en cada uno.
 
-- **Acceso**: Se configura un entorno en el flujo de trabajo usando la clave `environment` y `vars`. Además, puedes definir secretos específicos para cada entorno, utilizando la sintaxis `${{ vars.SECRET_VALUE }}`.
+- **Acceso**: Se configura un entorno en el flujo de trabajo usando la clave `environment` y `vars`. Además, puedes definir secretos específicos para cada entorno, utilizando la sintaxis `${{ vars.VARIABLE_VALUE }}`y `${{ secrets.SECRET_VALUE }}`.
 
 - **Ejemplo**:
 ```yaml
@@ -182,7 +190,10 @@ jobs:
         run: echo "Desplegando en el entorno de ${{ job.environment.name }}"
 
       - name: Access secret in environment
-        run: echo "El token es: ${{ vars.SECRET_VALUE }}"  # Acceso al secreto desde vars.SECRET_VALUE
+        run: echo "El token es: ${{ secrets.SECRET_VALUE }}"  # Acceso al secreto desde vars.SECRET_VALUE
+
+      - name: Access variable in environment
+        run: echo "El Ambiente es: ${{ vars.VARIABLE_VALUE }}"  # Acceso a la variable desde vars.VARIABLE_VALUE
 ```
 
 ### Ejemplo Completo
@@ -227,6 +238,12 @@ jobs:
       - name: Access Environment Specific Variable
         run: |
           echo "El valor de la variable de entorno es: ${{ vars.SECRET_VALUE }}"  # Acceso correcto a la variable específica del entorno
+
+      - name: Access Environment Specific secret
+        run: echo "El token es: ${{ secrets.SECRET_VALUE }}"  # Acceso al secreto desde vars.SECRET_VALUE
+
+      - name:Access Environment Specific Variable
+        run: echo "El Ambiente es: ${{ vars.VARIABLE_VALUE }}"  # Acceso a la variable desde vars.VARIABLE_VALUE
 
       - name: Deploy code
         run: echo "Desplegando en el entorno de ${{ job.environment.name }}"
