@@ -120,11 +120,12 @@ GitHub Actions permite el uso de varias variables de contexto para facilitar la 
 
 | Tipo                     | Pertenece a                          | Cómo se recuperan en el workflow                   |
 |--------------------------|--------------------------------------|---------------------------------------------------|
-| **Secrets (Actions)**    | Secrets del repositorio              | `${{ secrets.NOMBRE_DEL_SECRET }}`                |
-| **Secrets (Environments)** | Secrets del entorno                  | `${{ secrets.NOMBRE_DEL_SECRET }}`                |
+| **Repository Secrets**    | Secrets del repositorio              | `${{ secrets.NOMBRE_DEL_SECRET }}`                |
+| **Repository Variables**  | Variables definidas a nivel del repositorio | `${{ env.NOMBRE_DE_LA_VARIABLE }}`                 |
+| **Environments Secrets** | Secrets del entorno                  | `${{ secrets.NOMBRE_DEL_SECRET }}`                |
+| **Environments Variables** | Variables específicas de un entorno (Environments) | `${{ vars.NOMBRE_DE_LA_VARIABLE }}`                |
 | **Variables de entorno** | Variables configuradas en el workflow o heredadas del sistema | `${{ env.NOMBRE_DE_LA_VARIABLE }}`                 |
-| **Variables (Actions)**  | Variables definidas a nivel del repositorio | `${{ env.NOMBRE_DE_LA_VARIABLE }}`                 |
-| **Variables (Environments)** | Variables específicas de un entorno (Environments) | `${{ vars.NOMBRE_DE_LA_VARIABLE }}`                |
+
 
 #### 1. **Secrets**
 
